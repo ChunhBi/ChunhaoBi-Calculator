@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 import kotlin.math.sqrt
 
 class MainActivity : AppCompatActivity() {
@@ -60,7 +61,11 @@ class MainActivity : AppCompatActivity() {
         resultsTV.text = calculateResults()
     }
     fun sqrtAction(view: View) {
-        resultsTV.text = sqrt(calculateResults().toFloat()).toString()
+        val base = calculateResults().toFloat()
+        if (base < 0) {
+            Snackbar.make(workingsTV, "Square root of negative number is not supported!", Snackbar.LENGTH_SHORT).show()
+        }
+        resultsTV.text = sqrt(base).toString()
         workingsTV.text = ""
         canAddOperation = false
         canAddDecimal = true
@@ -134,6 +139,9 @@ class MainActivity : AppCompatActivity() {
                         restartIndex = i+1
                     }
                     '/' -> {
+                        if (nextDigit == 0f) {
+                            Snackbar.make(workingsTV, "Division by 0 occurs!", Snackbar.LENGTH_SHORT).show()
+                        }
                         newList.add(prevDigit / nextDigit)
                         restartIndex = i+1
                     }
