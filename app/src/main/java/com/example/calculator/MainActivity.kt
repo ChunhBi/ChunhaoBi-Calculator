@@ -52,14 +52,18 @@ class MainActivity : AppCompatActivity() {
     fun allClearAction(view: View) {
         workingsTV.text = ""
         resultsTV.text = ""
+        canAddOperation = false
+        canAddDecimal = true
     }
 
     fun equalsAction(view: View) {
         resultsTV.text = calculateResults()
     }
     fun sqrtAction(view: View) {
-//        workingsTV.append(")")
         resultsTV.text = sqrt(calculateResults().toFloat()).toString()
+        workingsTV.text = ""
+        canAddOperation = false
+        canAddDecimal = true
     }
 
     fun backSpaceAction(view: View) {
@@ -116,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calcTimesDiv(passedList: MutableList<Any>): MutableList<Any> {
-        val  newList = mutableListOf<Any>()
+        val newList = mutableListOf<Any>()
         var restartIndex = passedList.size
 
         for(i in passedList.indices) {
@@ -146,6 +150,7 @@ class MainActivity : AppCompatActivity() {
         return newList
     }
 
+    // Extract numbers and operators from text and store in list
     private fun digitsOperators(): MutableList<Any> {
         val list = mutableListOf<Any>()
         var currentDigit = ""
