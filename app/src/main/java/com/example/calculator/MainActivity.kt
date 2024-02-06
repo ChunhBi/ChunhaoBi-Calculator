@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import kotlin.math.sqrt
 
 class MainActivity : AppCompatActivity() {
     private lateinit var workingsTV: TextView
@@ -40,6 +41,13 @@ class MainActivity : AppCompatActivity() {
             canAddDecimal = true
         }
     }
+    fun sqrtOperationAction(view: View) {
+//        if(view is Button && canAddOperation) {
+//            workingsTV.append(")")
+//            canAddOperation = false
+//            canAddDecimal = true
+//        }
+    }
 
     fun allClearAction(view: View) {
         workingsTV.text = ""
@@ -49,11 +57,27 @@ class MainActivity : AppCompatActivity() {
     fun equalsAction(view: View) {
         resultsTV.text = calculateResults()
     }
+    fun sqrtAction(view: View) {
+//        workingsTV.append(")")
+        resultsTV.text = sqrt(calculateResults().toFloat()).toString()
+    }
 
     fun backSpaceAction(view: View) {
         val length = workingsTV.length()
         if (length > 0) {
+            val lastChar = workingsTV.text.last()
+            if (lastChar == '+' || lastChar == '-' || lastChar == '*' || lastChar == '/') {
+                canAddOperation = true
+            }
+            else if (lastChar == '.') {
+                canAddDecimal = true
+            }
             workingsTV.text = workingsTV.text.subSequence(0, length-1)
+        }
+        if (length == 1) {
+            canAddOperation = false
+            canAddDecimal = true
+            return
         }
     }
 

@@ -59,6 +59,7 @@
             android:text="⌫" />
         <Button
             style="@style/buttonOperator"
+            android:onClick="sqrtAction"
             android:text="sqrt" />
         <Button
             style="@style/buttonOperator"
